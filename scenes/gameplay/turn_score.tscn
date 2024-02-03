@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://5ql7ouowd7k8"]
+
+[sub_resource type="SystemFont" id="SystemFont_iyag0"]
+font_names = PackedStringArray("m6x11plus")
+allow_system_fallback = false
+subpixel_positioning = 0
+msdf_pixel_range = 4192
+msdf_size = 1466
+
+[sub_resource type="FontVariation" id="FontVariation_lf321"]
+base_font = SubResource("SystemFont_iyag0")
+
+[node name="TurnScore" type="PanelContainer"]
+offset_right = 50.0
+offset_bottom = 28.0
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_fonts/font = SubResource("FontVariation_lf321")
+theme_override_font_sizes/font_size = 18
+text = "Nothing"
+horizontal_alignment = 1
+vertical_alignment = 1

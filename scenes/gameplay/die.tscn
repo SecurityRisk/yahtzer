@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://i41udss2xnu6"]
+
+[ext_resource type="Texture2D" uid="uid://cddomx13ktvc" path="res://assets/sprites/dice-outline.png" id="1_30gdf"]
+[ext_resource type="Script" path="res://scenes/gameplay/die.gd" id="1_am5ka"]
+
+[node name="Die" type="CenterContainer" groups=["dice"]]
+custom_minimum_size = Vector2(33, 33)
+offset_right = 33.0
+offset_bottom = 33.0
+pivot_offset = Vector2(16, 16)
+size_flags_vertical = 4
+mouse_filter = 0
+script = ExtResource("1_am5ka")
+
+[node name="DiceOutline" type="Sprite2D" parent="."]
+texture = ExtResource("1_30gdf")
+centered = false
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]

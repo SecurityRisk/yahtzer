@@ -1,13 +1,29 @@
-[gd_resource type="Theme" load_steps=2 format=3 uid="uid://ducfept6pmkkm"]
+[gd_resource type="Theme" load_steps=4 format=3 uid="uid://ducfept6pmkkm"]
 
-[ext_resource type="FontFile" uid="uid://cawekr44fruhm" path="res://assets/fonts/open-sans/open-sans-regular.ttf" id="1_6yttj"]
+[ext_resource type="FontFile" uid="uid://b7ynlsnc7u4ir" path="res://assets/fonts/m6x11plus.ttf" id="1_uo4b3"]
+
+[sub_resource type="FontVariation" id="FontVariation_yvt1r"]
+base_font = ExtResource("1_uo4b3")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e2xbm"]
+bg_color = Color(0.733333, 0.223529, 0.25098, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
 
 [resource]
-default_font = ExtResource("1_6yttj")
+default_font = ExtResource("1_uo4b3")
 default_font_size = 20
 LabelSmall/base_type = &"Label"
-LabelSmall/font_sizes/font_size = 16
-MarginContainer/constants/margin_bottom = 32
-MarginContainer/constants/margin_left = 32
-MarginContainer/constants/margin_right = 32
-MarginContainer/constants/margin_top = 32
+LabelSmall/font_sizes/font_size = 8
+LabelSmall/fonts/font = SubResource("FontVariation_yvt1r")
+MarginContainer/constants/margin_bottom = 12
+MarginContainer/constants/margin_left = 12
+MarginContainer/constants/margin_right = 12
+MarginContainer/constants/margin_top = 12
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_e2xbm")

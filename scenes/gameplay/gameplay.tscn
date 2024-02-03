@@ -1,14 +1,274 @@
-[gd_scene load_steps=4 format=3 uid="uid://4fyoq8npekf0"]
+[gd_scene load_steps=11 format=3 uid="uid://4fyoq8npekf0"]
 
-[ext_resource type="Texture2D" uid="uid://dtwpm3uclaspj" path="res://assets/sprites/icon.png" id="1"]
 [ext_resource type="PackedScene" uid="uid://barl4q1kugrmm" path="res://scenes/gameplay/pause-layer/pause-layer.tscn" id="2"]
+[ext_resource type="PackedScene" uid="uid://5ql7ouowd7k8" path="res://scenes/gameplay/turn_score.tscn" id="3_6cqm7"]
+[ext_resource type="PackedScene" uid="uid://i41udss2xnu6" path="res://scenes/gameplay/die.tscn" id="3_dv2pn"]
+[ext_resource type="Script" path="res://scenes/gameplay/turn_score.gd" id="4_14v7i"]
+[ext_resource type="Script" path="res://scenes/gameplay/hand.gd" id="4_rdtas"]
 [ext_resource type="Script" path="res://scenes/gameplay/gameplay.gd" id="5"]
+[ext_resource type="PackedScene" uid="uid://decd6o03w58dd" path="res://scenes/gameplay/enemy.tscn" id="5_21tfq"]
+[ext_resource type="Script" path="res://scenes/gameplay/enemy.gd" id="6_iwpjt"]
+[ext_resource type="Script" path="res://scenes/gameplay/play_turn.gd" id="7_43l2u"]
+[ext_resource type="Script" path="res://scenes/gameplay/damage-label.gd" id="8_fysmr"]
 
 [node name="Gameplay" type="Node"]
 script = ExtResource("5")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(523.993, 298.508)
-texture = ExtResource("1")
-
 [node name="PauseLayer" parent="." instance=ExtResource("2")]
+visible = false
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.388235, 0.737255, 0.862745, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 30
+alignment = 1
+
+[node name="Control" type="PanelContainer" parent="Control/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="Control/MarginContainer/HBoxContainer/Control"]
+visible = false
+layout_mode = 2
+color = Color(0.384314, 0.486275, 0.521569, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/MarginContainer/HBoxContainer/Control"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/MarginContainer/HBoxContainer/Control/MarginContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="TurnScore" parent="Control/MarginContainer/HBoxContainer/Control/MarginContainer/VBoxContainer" instance=ExtResource("3_6cqm7")]
+layout_mode = 2
+size_flags_horizontal = 1
+size_flags_vertical = 6
+script = ExtResource("4_14v7i")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/MarginContainer/HBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Control" type="Control" parent="Control/MarginContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(300, 200)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="PanelContainer" type="PanelContainer" parent="Control/MarginContainer/HBoxContainer/VBoxContainer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="Control/MarginContainer/HBoxContainer/VBoxContainer/Control/PanelContainer"]
+visible = false
+custom_minimum_size = Vector2(300, 200)
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 1
+color = Color(0.384314, 0.486275, 0.521569, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/MarginContainer/HBoxContainer/VBoxContainer/Control/PanelContainer"]
+custom_minimum_size = Vector2(300, 200)
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="CenterContainer" type="CenterContainer" parent="Control/MarginContainer/HBoxContainer/VBoxContainer/Control/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Enemy" parent="Control/MarginContainer/HBoxContainer/VBoxContainer/Control/PanelContainer/VBoxContainer/CenterContainer" instance=ExtResource("5_21tfq")]
+layout_mode = 2
+script = ExtResource("6_iwpjt")
+
+[node name="PlayContainer" type="HBoxContainer" parent="Control/MarginContainer/HBoxContainer/VBoxContainer/Control/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(300, 75)
+layout_mode = 2
+theme_override_constants/separation = 21
+alignment = 1
+script = ExtResource("7_43l2u")
+
+[node name="DamageLabel" type="Label" parent="Control/MarginContainer/HBoxContainer/VBoxContainer/Control"]
+layout_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -192.0
+offset_bottom = -39.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("8_fysmr")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/MarginContainer/HBoxContainer/VBoxContainer/Control/DamageLabel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="LeftScoreContainer" type="HBoxContainer" parent="Control/MarginContainer/HBoxContainer/VBoxContainer/Control/DamageLabel/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+alignment = 2
+
+[node name="X3" type="Label" parent="Control/MarginContainer/HBoxContainer/VBoxContainer/Control/DamageLabel/HBoxContainer/LeftScoreContainer"]
+layout_mode = 2
+text = "1"
+
+[node name="X2" type="Label" parent="Control/MarginContainer/HBoxContainer/VBoxContainer/Control/DamageLabel/HBoxContainer/LeftScoreContainer"]
+layout_mode = 2
+text = "0"
+
+[node name="X" type="Label" parent="Control/MarginContainer/HBoxContainer/VBoxContainer/Control/DamageLabel/HBoxContainer"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+text = " x "
+horizontal_alignment = 1
+clip_text = true
+
+[node name="RightMultiplierContainer" type="HBoxContainer" parent="Control/MarginContainer/HBoxContainer/VBoxContainer/Control/DamageLabel/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+
+[node name="X2" type="Label" parent="Control/MarginContainer/HBoxContainer/VBoxContainer/Control/DamageLabel/HBoxContainer/RightMultiplierContainer"]
+layout_mode = 2
+text = "0"
+
+[node name="AdderBox" type="HBoxContainer" parent="Control/MarginContainer/HBoxContainer/VBoxContainer/Control/DamageLabel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -47.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="LeftScoreAdderContainer" type="HBoxContainer" parent="Control/MarginContainer/HBoxContainer/VBoxContainer/Control/DamageLabel/AdderBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+alignment = 2
+
+[node name="X" type="Label" parent="Control/MarginContainer/HBoxContainer/VBoxContainer/Control/DamageLabel/AdderBox"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+text = "   "
+horizontal_alignment = 1
+clip_text = true
+
+[node name="RightMultiplierAdderContainer" type="HBoxContainer" parent="Control/MarginContainer/HBoxContainer/VBoxContainer/Control/DamageLabel/AdderBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+
+[node name="Panel" type="PanelContainer" parent="Control/MarginContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+mouse_filter = 1
+
+[node name="ColorRect" type="ColorRect" parent="Control/MarginContainer/HBoxContainer/VBoxContainer/Panel"]
+visible = false
+layout_mode = 2
+mouse_filter = 2
+color = Color(0.384314, 0.486275, 0.521569, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/MarginContainer/HBoxContainer/VBoxContainer/Panel"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Hand" type="HBoxContainer" parent="Control/MarginContainer/HBoxContainer/VBoxContainer/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(300, 75)
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/separation = 21
+alignment = 1
+script = ExtResource("4_rdtas")
+
+[node name="Die" parent="Control/MarginContainer/HBoxContainer/VBoxContainer/Panel/VBoxContainer/Hand" instance=ExtResource("3_dv2pn")]
+layout_mode = 2
+
+[node name="Die2" parent="Control/MarginContainer/HBoxContainer/VBoxContainer/Panel/VBoxContainer/Hand" instance=ExtResource("3_dv2pn")]
+layout_mode = 2
+
+[node name="Die3" parent="Control/MarginContainer/HBoxContainer/VBoxContainer/Panel/VBoxContainer/Hand" instance=ExtResource("3_dv2pn")]
+layout_mode = 2
+
+[node name="Die4" parent="Control/MarginContainer/HBoxContainer/VBoxContainer/Panel/VBoxContainer/Hand" instance=ExtResource("3_dv2pn")]
+layout_mode = 2
+
+[node name="Die5" parent="Control/MarginContainer/HBoxContainer/VBoxContainer/Panel/VBoxContainer/Hand" instance=ExtResource("3_dv2pn")]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/MarginContainer/HBoxContainer/VBoxContainer/Panel/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/MarginContainer/HBoxContainer/VBoxContainer/Panel/VBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_constants/separation = 26
+alignment = 1
+
+[node name="RerollButton" type="Button" parent="Control/MarginContainer/HBoxContainer/VBoxContainer/Panel/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+text = "Reroll"
+
+[node name="EndTurnButton" type="Button" parent="Control/MarginContainer/HBoxContainer/VBoxContainer/Panel/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+mouse_filter = 1
+text = "End Turn"
+
+[connection signal="attack_finished" from="Control/MarginContainer/HBoxContainer/VBoxContainer/Control/PanelContainer/VBoxContainer/PlayContainer" to="Control/MarginContainer/HBoxContainer/VBoxContainer/Panel/VBoxContainer/Hand" method="_on_play_container_attack_finished"]
+[connection signal="end_turn_with_selected_dice" from="Control/MarginContainer/HBoxContainer/VBoxContainer/Panel/VBoxContainer/Hand" to="Control/MarginContainer/HBoxContainer/VBoxContainer/Control/PanelContainer/VBoxContainer/PlayContainer" method="_on_hand_end_turn_with_selected_dice"]
+[connection signal="pressed" from="Control/MarginContainer/HBoxContainer/VBoxContainer/Panel/VBoxContainer/MarginContainer/HBoxContainer/RerollButton" to="Control/MarginContainer/HBoxContainer/Control/MarginContainer/VBoxContainer/TurnScore" method="_on_end_turn_button_pressed"]
+[connection signal="pressed" from="Control/MarginContainer/HBoxContainer/VBoxContainer/Panel/VBoxContainer/MarginContainer/HBoxContainer/RerollButton" to="Control/MarginContainer/HBoxContainer/VBoxContainer/Panel/VBoxContainer/Hand" method="_on_reroll_button_pressed"]
+[connection signal="pressed" from="Control/MarginContainer/HBoxContainer/VBoxContainer/Panel/VBoxContainer/MarginContainer/HBoxContainer/EndTurnButton" to="Control/MarginContainer/HBoxContainer/Control/MarginContainer/VBoxContainer/TurnScore" method="_on_end_turn_button_pressed"]
+[connection signal="pressed" from="Control/MarginContainer/HBoxContainer/VBoxContainer/Panel/VBoxContainer/MarginContainer/HBoxContainer/EndTurnButton" to="Control/MarginContainer/HBoxContainer/VBoxContainer/Control/PanelContainer/VBoxContainer/CenterContainer/Enemy" method="_on_end_turn_button_pressed"]
+[connection signal="pressed" from="Control/MarginContainer/HBoxContainer/VBoxContainer/Panel/VBoxContainer/MarginContainer/HBoxContainer/EndTurnButton" to="Control/MarginContainer/HBoxContainer/VBoxContainer/Panel/VBoxContainer/Hand" method="_on_end_turn_button_pressed"]
