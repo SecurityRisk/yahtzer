@@ -5,6 +5,7 @@ extends CenterContainer
 # Load your dot texture
 var dot_texture = preload("res://assets/sprites/dice-dot.png")
 var selected := false
+var selectable := true
 var num_dots := 0
 var is_decoy := false
 
@@ -109,7 +110,7 @@ func _process(_delta):
 
 
 func _on_gui_input(event):
-	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT and selectable:
 		# Move the container 20 pixels up in the y direction
 		if (selected):
 			selected = !selected

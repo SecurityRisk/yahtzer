@@ -15,7 +15,10 @@ offset_right = 50.0
 offset_bottom = 28.0
 size_flags_horizontal = 3
 
-[node name="Label" type="Label" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1

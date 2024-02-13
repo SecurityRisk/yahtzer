@@ -57,9 +57,10 @@ folder_colors={
 
 [gui]
 
+common/snap_controls_to_pixels=false
 theme/custom="res://resources/theme/theme-main.tres"
 theme/default_font_antialiasing=0
-theme/default_font_subpixel_positioning=0
+theme/default_font_subpixel_positioning=3
 
 [input]
 

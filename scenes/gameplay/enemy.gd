@@ -15,7 +15,7 @@ func _process(_delta):
 	pass
 
 
-func _on_end_turn_button_pressed():
+func _on_play_container_damage_time():
 	if (ScoreHandler.current_score == 0):
 		return
 	# Ensure there's a Tween node available

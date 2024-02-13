@@ -51,6 +51,10 @@ func _on_reroll_button_pressed():
 
 
 func _on_end_turn_button_pressed():
+	if get_selected_dice().is_empty():
+		return
+	for die in dice:
+		die.selectable = false
 	var selected_dice = get_selected_dice()
 	for die in get_selected_dice():
 		dice.erase(die)
@@ -67,4 +71,6 @@ func _on_play_container_attack_finished():
 		die.hand = self
 		add_child(die)
 		dice.append(die)
+	for die in dice:
+		die.selectable = true
 	sort_dice()

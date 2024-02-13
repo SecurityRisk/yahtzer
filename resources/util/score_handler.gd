@@ -7,6 +7,8 @@ class YahtzeeCombo:
 	var multiplier:int
 	var total_dots:int
 	var total_scoring_dots:int
+	var base_adder:int = 0
+	var multiplier_adder:int = 0
 	
 	func set_dots(dots:int, scoring_dots:int) -> YahtzeeCombo:
 		total_dots = dots
@@ -17,8 +19,12 @@ class YahtzeeCombo:
 		combo_name = starting_name
 		base_score = starting_base_score
 		multiplier = starting_base_multiplier
+	
+	func reset_base():
+		base_adder = 0
+		multiplier_adder = 0
 
-enum { CHANCE, PAIR, TWO_PAIR, THREE_OF_A_KIND, FOUR_OF_A_KIND, FULL_HOUSE, SMALL_STRAIGHT, LARGE_STRAIGHT, YAHTZEE }
+enum { NOTHING, CHANCE, PAIR, TWO_PAIR, THREE_OF_A_KIND, FOUR_OF_A_KIND, FULL_HOUSE, SMALL_STRAIGHT, LARGE_STRAIGHT, YAHTZEE }
 
 signal current_combo_changed(new_combo:YahtzeeCombo)
 var current_combo:YahtzeeCombo: 
@@ -30,6 +36,7 @@ var current_combo:YahtzeeCombo:
 
 var current_score := 0
 var yahtzee_combinations = {
+	NOTHING: YahtzeeCombo.new("Nothing", 0, 0),
 	CHANCE: YahtzeeCombo.new("Chance", 10, 1),
 	PAIR: YahtzeeCombo.new("Pair", 10, 2),
 	TWO_PAIR: YahtzeeCombo.new("Two Pair", 20, 2),
@@ -40,6 +47,11 @@ var yahtzee_combinations = {
 	LARGE_STRAIGHT: YahtzeeCombo.new("Large Straight", 70, 6),
 	YAHTZEE: YahtzeeCombo.new("Yahtzee", 100, 8)
 }
+
+func reset_score():
+	current_combo.reset_base()
+	current_combo = yahtzee_combinations.get(NOTHING)
+	current_score = 0
 
 func update_yahtzee_combo(dice_array:Array[Die]) -> YahtzeeCombo:
 	current_combo = calculate_highest_score(dice_array)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://4fyoq8npekf0"]
+[gd_scene load_steps=15 format=3 uid="uid://4fyoq8npekf0"]
 
 [ext_resource type="PackedScene" uid="uid://barl4q1kugrmm" path="res://scenes/gameplay/pause-layer/pause-layer.tscn" id="2"]
 [ext_resource type="PackedScene" uid="uid://5ql7ouowd7k8" path="res://scenes/gameplay/turn_score.tscn" id="3_6cqm7"]
@@ -10,6 +10,73 @@
 [ext_resource type="Script" path="res://scenes/gameplay/enemy.gd" id="6_iwpjt"]
 [ext_resource type="Script" path="res://scenes/gameplay/play_turn.gd" id="7_43l2u"]
 [ext_resource type="Script" path="res://scenes/gameplay/damage-label.gd" id="8_fysmr"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rtdpv"]
+bg_color = Color(0, 0, 0, 0.298039)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="Animation" id="Animation_50p1d"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1.135, 1.135)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.29147]
+}
+
+[sub_resource type="Animation" id="Animation_8xphd"]
+resource_name = "damaged"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 1),
+"transitions": PackedFloat32Array(1, 4.92457, 1),
+"update": 0,
+"values": [Vector2(0.175, 0.175), Vector2(2.855, 2.855), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.29147, 0.0244346]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yyd5w"]
+_data = {
+"RESET": SubResource("Animation_50p1d"),
+"damaged": SubResource("Animation_8xphd")
+}
 
 [node name="Gameplay" type="Node"]
 script = ExtResource("5")
@@ -32,7 +99,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.388235, 0.737255, 0.862745, 1)
+color = Color(0.164706, 0.615686, 0.560784, 1)
 
 [node name="MarginContainer" type="MarginContainer" parent="Control"]
 layout_mode = 1
@@ -71,6 +138,7 @@ alignment = 1
 layout_mode = 2
 size_flags_horizontal = 1
 size_flags_vertical = 6
+theme_override_styles/panel = SubResource("StyleBoxFlat_rtdpv")
 script = ExtResource("4_14v7i")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/MarginContainer/HBoxContainer"]
@@ -104,13 +172,55 @@ layout_mode = 2
 size_flags_vertical = 3
 alignment = 1
 
-[node name="CenterContainer" type="CenterContainer" parent="Control/MarginContainer/HBoxContainer/VBoxContainer/Control/PanelContainer/VBoxContainer"]
+[node name="Control" type="Control" parent="Control/MarginContainer/HBoxContainer/VBoxContainer/Control/PanelContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Enemy" parent="Control/MarginContainer/HBoxContainer/VBoxContainer/Control/PanelContainer/VBoxContainer/CenterContainer" instance=ExtResource("5_21tfq")]
+[node name="CenterContainer" type="CenterContainer" parent="Control/MarginContainer/HBoxContainer/VBoxContainer/Control/PanelContainer/VBoxContainer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+
+[node name="Enemy" parent="Control/MarginContainer/HBoxContainer/VBoxContainer/Control/PanelContainer/VBoxContainer/Control/CenterContainer" instance=ExtResource("5_21tfq")]
 layout_mode = 2
 script = ExtResource("6_iwpjt")
+
+[node name="DamageToEnemyLabel" type="Label" parent="Control/MarginContainer/HBoxContainer/VBoxContainer/Control/PanelContainer/VBoxContainer/Control"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = 7.5
+offset_right = 16.0
+offset_bottom = 28.5
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 0.29147
+scale = Vector2(1.135, 1.135)
+pivot_offset = Vector2(16, 10)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.734846, 0, 0.149172, 1)
+theme_override_constants/outline_size = 4
+theme_override_constants/shadow_outline_size = 3
+text = "5210"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Control/MarginContainer/HBoxContainer/VBoxContainer/Control/PanelContainer/VBoxContainer/Control/DamageToEnemyLabel"]
+libraries = {
+"": SubResource("AnimationLibrary_yyd5w")
+}
 
 [node name="PlayContainer" type="HBoxContainer" parent="Control/MarginContainer/HBoxContainer/VBoxContainer/Control/PanelContainer/VBoxContainer"]
 custom_minimum_size = Vector2(300, 75)
@@ -120,6 +230,7 @@ alignment = 1
 script = ExtResource("7_43l2u")
 
 [node name="DamageLabel" type="Label" parent="Control/MarginContainer/HBoxContainer/VBoxContainer/Control"]
+unique_name_in_owner = true
 layout_mode = 2
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -256,19 +367,21 @@ alignment = 1
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 8
+focus_mode = 0
 text = "Reroll"
 
 [node name="EndTurnButton" type="Button" parent="Control/MarginContainer/HBoxContainer/VBoxContainer/Panel/VBoxContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 8
+focus_mode = 0
 mouse_filter = 1
 text = "End Turn"
 
 [connection signal="attack_finished" from="Control/MarginContainer/HBoxContainer/VBoxContainer/Control/PanelContainer/VBoxContainer/PlayContainer" to="Control/MarginContainer/HBoxContainer/VBoxContainer/Panel/VBoxContainer/Hand" method="_on_play_container_attack_finished"]
+[connection signal="damage_time" from="Control/MarginContainer/HBoxContainer/VBoxContainer/Control/PanelContainer/VBoxContainer/PlayContainer" to="Control/MarginContainer/HBoxContainer/VBoxContainer/Control/PanelContainer/VBoxContainer/Control/CenterContainer/Enemy" method="_on_play_container_damage_time"]
 [connection signal="end_turn_with_selected_dice" from="Control/MarginContainer/HBoxContainer/VBoxContainer/Panel/VBoxContainer/Hand" to="Control/MarginContainer/HBoxContainer/VBoxContainer/Control/PanelContainer/VBoxContainer/PlayContainer" method="_on_hand_end_turn_with_selected_dice"]
 [connection signal="pressed" from="Control/MarginContainer/HBoxContainer/VBoxContainer/Panel/VBoxContainer/MarginContainer/HBoxContainer/RerollButton" to="Control/MarginContainer/HBoxContainer/Control/MarginContainer/VBoxContainer/TurnScore" method="_on_end_turn_button_pressed"]
 [connection signal="pressed" from="Control/MarginContainer/HBoxContainer/VBoxContainer/Panel/VBoxContainer/MarginContainer/HBoxContainer/RerollButton" to="Control/MarginContainer/HBoxContainer/VBoxContainer/Panel/VBoxContainer/Hand" method="_on_reroll_button_pressed"]
 [connection signal="pressed" from="Control/MarginContainer/HBoxContainer/VBoxContainer/Panel/VBoxContainer/MarginContainer/HBoxContainer/EndTurnButton" to="Control/MarginContainer/HBoxContainer/Control/MarginContainer/VBoxContainer/TurnScore" method="_on_end_turn_button_pressed"]
-[connection signal="pressed" from="Control/MarginContainer/HBoxContainer/VBoxContainer/Panel/VBoxContainer/MarginContainer/HBoxContainer/EndTurnButton" to="Control/MarginContainer/HBoxContainer/VBoxContainer/Control/PanelContainer/VBoxContainer/CenterContainer/Enemy" method="_on_end_turn_button_pressed"]
 [connection signal="pressed" from="Control/MarginContainer/HBoxContainer/VBoxContainer/Panel/VBoxContainer/MarginContainer/HBoxContainer/EndTurnButton" to="Control/MarginContainer/HBoxContainer/VBoxContainer/Panel/VBoxContainer/Hand" method="_on_end_turn_button_pressed"]
